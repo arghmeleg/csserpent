@@ -67,7 +67,7 @@ defmodule CSSerpent do
     |> Enum.filter(& &1)
   end
 
-  def parse(_body, _source), do: []
+  def parse(_body), do: []
 
   defp parse_props(props) when is_binary(props) do
     props
