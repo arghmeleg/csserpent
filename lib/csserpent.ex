@@ -13,6 +13,22 @@ defmodule CSSerpent do
                 Regex.source(@normal_rule_regex)
               }/s
 
+  @doc """
+  Parses CSS text from a string.
+  ## Example
+      iex> CSSerpent.parse("p { color: green }")
+      [
+        %CSSerpent.Rule{
+          identifier: nil,
+          props: [%{property: "color", value: "green"}],
+          raw: "p { color: green }",
+          rules: nil,
+          selector: "p",
+          source: nil,
+          value: nil
+        }
+      ]
+  """
   @spec parse(String.t(), any()) :: list(Rule.t())
   def parse(body, source \\ nil)
 
@@ -68,6 +84,15 @@ defmodule CSSerpent do
 
   defp parse_props(_), do: []
 
+  @doc """
+  Converts parsed CSS to raw CSS.
+  ## Example
+      iex> CSSerpent.raw_css(%CSSerpent.Rule{props: [%{property: "color", value: "green"}], selector: "p"})
+      "p{color:green}"
+
+      iex> CSSerpent.raw_css([%CSSerpent.Rule{props: [%{property: "color", value: "blue"}], selector: "p"}])
+      "p{color:blue}"
+  """
   @spec raw_css(list(Rule.t()) | Rule.t()) :: String.t()
   def raw_css(rules) when is_list(rules) do
     Enum.map_join(rules, &raw_css/1)
