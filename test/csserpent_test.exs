@@ -2,6 +2,57 @@ defmodule CSSerpentTest do
   use ExUnit.Case
   doctest CSSerpent
 
+  alias CSSerpent.Rule
+
+  describe "raw css" do
+    test "normal rule" do
+      raw_css =
+        CSSerpent.raw_css(%Rule{selector: "body", props: [%{property: "color", value: "green"}]})
+
+      assert raw_css == "body{color:green}"
+    end
+
+    test "@charset" do
+      raw_css = CSSerpent.raw_css(%Rule{identifier: "@charset", value: "\"utf-8\""})
+
+      assert raw_css == "@charset \"utf-8\";"
+    end
+
+    test "nested at rule" do
+      rule = %Rule{
+        identifier: "@media",
+        value: "only screen and (max-width: 600px)",
+        rules: [
+          %Rule{selector: "body", props: [%{property: "color", value: "blue"}]}
+        ]
+      }
+
+      raw_css = CSSerpent.raw_css(rule)
+
+      assert raw_css == "@media only screen and (max-width: 600px){body{color:blue}}"
+    end
+
+    test "conditional at rules" do
+      css = ~s|
+        @supports (display: flex) {
+          @media screen and (min-width: 900px) {
+            article {
+              display: flex;
+            }
+          }
+        }
+      |
+
+      raw_css =
+        css
+        |> CSSerpent.parse()
+        |> CSSerpent.raw_css()
+
+      assert raw_css ==
+               "@supports (display: flex){@media screen and (min-width: 900px){article{display:flex}}}"
+    end
+  end
+
   test "normal selector" do
     assert_rule(
       ~s(body { color: green }),
