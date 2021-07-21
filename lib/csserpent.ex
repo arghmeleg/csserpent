@@ -6,12 +6,13 @@ defmodule CSSerpent do
 
   @normal_rule_regex ~r/(?<selector>[^{@]+)\s*{\s*(?<props>[^{}]+)}/
   @regular_at_rule_regex ~r/(?<identifier>@(charset|import|namespace)+)\s+(?<value>[^\s]+);/
-  @nested_at_rule_regex ~r/(?<nested_identifier>@\w+)\s+(?<nested_value>[^{]+)\s*{\s*(?<rules>.*)}/
+  @nested_at_rule_value_regex ~r/(?<nested_identifier_value>@[\w\-]+)\s+(?<nested_value>[^{]+)\s*{\s*(?<nested_rules>.*)}/
+  @nested_at_rule_regex ~r/(?<nested_identifier>@[\w\-]+)\s*{\s*(?<nested_props>.*)}/
   @comment_regex ~r/\/\*.*\*\//
 
-  @rule_regex ~r/#{Regex.source(@regular_at_rule_regex)}|#{Regex.source(@nested_at_rule_regex)}|#{
-                Regex.source(@normal_rule_regex)
-              }/s
+  @rule_regex ~r/#{Regex.source(@regular_at_rule_regex)}|#{
+                Regex.source(@nested_at_rule_value_regex)
+              }|#{Regex.source(@nested_at_rule_regex)}|#{Regex.source(@normal_rule_regex)}/s
 
   @doc """
   Parses CSS text from a string.
@@ -40,15 +41,23 @@ defmodule CSSerpent do
     |> List.flatten()
     |> Enum.map(fn css ->
       case Regex.named_captures(@rule_regex, css) do
-        %{"nested_identifier" => nid} = capts when byte_size(nid) > 0 ->
+        %{"nested_identifier_value" => nid} = capts when byte_size(nid) > 0 ->
           %Rule{
             props: [],
             selector: nil,
             raw: css,
-            identifier: trim_or_nil(capts["nested_identifier"]),
+            identifier: trim_or_nil(capts["nested_identifier_value"]),
             value: trim_or_nil(capts["nested_value"]),
-            rules: parse(capts["rules"], source),
+            rules: parse(capts["nested_rules"], source),
             source: source
+          }
+
+        %{"nested_identifier" => nid} = capts when byte_size(nid) > 0 ->
+          %Rule{
+            props: parse_props(capts["nested_props"]),
+            selector: nil,
+            raw: css,
+            identifier: trim_or_nil(capts["nested_identifier"])
           }
 
         %{} = capts ->

@@ -99,6 +99,15 @@ defmodule CSSerpentTest do
       assert Enum.any?(rule.rules, &(&1.selector == "to"))
       assert Enum.any?(rule.rules, &(&1.selector == "from"))
     end
+
+    test "@font-face" do
+      css =
+        ~s|@font-face{font-style:normal;font-family:biosans;font-weight:400;font-display:swap;src:url(../fonts/biosans-regular-webfont.acf44e8d.woff2) format("woff2"),url(../fonts/biosans-regular-webfont.ef972623.woff) format("woff")}|
+
+      [rule] = CSSerpent.parse(css)
+      assert rule.identifier == "@font-face"
+      assert Enum.count(rule.props) == 5
+    end
   end
 
   describe "conditional @ rules" do
