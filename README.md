@@ -29,7 +29,7 @@ The package can be installed by adding `csserpent` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:csserpent, "~> 0.1.0"}
+    {:csserpent, "~> 0.3.0"}
   ]
 end
 ```
