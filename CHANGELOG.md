@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0] - 2021-07-21
+
+### Fixed
+
+- `@font-face` is parsed now, as well as any nested at-rule without a value.
+
 ## [0.2.0] - 2021-07-11
 
 ### Changed

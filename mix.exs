@@ -2,7 +2,7 @@ defmodule CSSerpent.MixProject do
   use Mix.Project
 
   @description "CSSerpent is a CSS parsing library."
-  @version "0.2.0"
+  @version "0.3.0"
 
   def project do
     [
