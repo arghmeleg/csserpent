@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2021-07-21
+
+### Fixed
+
+- `@font-face` are no longer overly greedy.
+
 ## [0.3.0] - 2021-07-21
 
 ### Fixed
