@@ -6,7 +6,7 @@ defmodule CSSerpent do
 
   @normal_rule_regex ~r/(?<selector>[^{@]+)\s*{\s*(?<props>[^{}]+)}/
   @regular_at_rule_regex ~r/(?<identifier>@(charset|import|namespace)+)\s+(?<value>[^\s]+);/
-  @nested_at_rule_value_regex ~r/(?<nested_identifier_value>@[\w\-]+)\s+(?<nested_value>[^{]+)\s*{\s*(?<nested_rules>.*)}/
+  @nested_at_rule_value_regex ~r/(?<nested_identifier_value>@[\w\-]+)\s+(?<nested_value>[^{]+)\s*{\s*(?<nested_rules>([^{}]+{[^}]*}+\s*}*)*)\s*}/
   @nested_at_rule_regex ~r/(?<nested_identifier>@[\w\-]+)\s*{\s*(?<nested_props>.*?)}/
   @comment_regex ~r/\/\*.*\*\//
 
