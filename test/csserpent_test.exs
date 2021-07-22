@@ -116,6 +116,14 @@ defmodule CSSerpentTest do
       rules = CSSerpent.parse(css)
       assert Enum.count(rules) == 2
     end
+
+    test "multiple comma seperated @media's" do
+      css =
+        ~s|@media print,screen and (min-width:900px){.columns{margin:0 auto;width:100%;max-width:1000px}}.layout--cas .columns{padding:8px 32px 24px}|
+
+      rules = CSSerpent.parse(css)
+      assert Enum.count(rules) == 2
+    end
   end
 
   describe "conditional @ rules" do
