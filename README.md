@@ -1,3 +1,4 @@
+[![Actions Status](https://github.com/arghmeleg/csserpent/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/arghmeleg/csserpent/actions)
 [![CSSerpent version](https://img.shields.io/hexpm/v/csserpent.svg)](https://hex.pm/packages/csserpent)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/csserpent/)
 
