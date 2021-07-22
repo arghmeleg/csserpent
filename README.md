@@ -1,3 +1,4 @@
+[![Actions Status](https://github.com/arghmeleg/csserpent/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/arghmeleg/csserpent/actions)
 [![CSSerpent version](https://img.shields.io/hexpm/v/csserpent.svg)](https://hex.pm/packages/csserpent)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/csserpent/)
 
@@ -29,7 +30,7 @@ The package can be installed by adding `csserpent` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:csserpent, "~> 0.3.0"}
+    {:csserpent, "~> 0.4.0"}
   ]
 end
 ```

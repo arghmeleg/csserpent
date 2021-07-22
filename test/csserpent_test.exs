@@ -108,6 +108,14 @@ defmodule CSSerpentTest do
       assert rule.identifier == "@font-face"
       assert Enum.count(rule.props) == 5
     end
+
+    test "non-greedy font faces" do
+      css =
+        ~s|@font-face{font-family:bio;src:url(bio.woff2)}@font-face{font-family:biosans;src:url(biosans.woff2)}|
+
+      rules = CSSerpent.parse(css)
+      assert Enum.count(rules) == 2
+    end
   end
 
   describe "conditional @ rules" do
