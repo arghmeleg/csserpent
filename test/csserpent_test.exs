@@ -124,6 +124,14 @@ defmodule CSSerpentTest do
       rules = CSSerpent.parse(css)
       assert Enum.count(rules) == 2
     end
+
+    test "multiple nested @ rules" do
+      css =
+        ~s|@media (min-width:900px){.icon{fill:#819cac}}.icon{fill:#819cac}@media (min-width:900px){.icon{fill:rgba(55,158,193,.5)}}.homepage{margin:0;}|
+
+      rules = CSSerpent.parse(css)
+      assert Enum.count(rules) == 4
+    end
   end
 
   describe "conditional @ rules" do
