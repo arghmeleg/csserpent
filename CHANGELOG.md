@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.1] - 2021-07-22
+
+### Fixed
+
+- Fix multiple nested @ rules.
+
 ## [0.5.0] - 2021-07-22
 
 ### Fixed
